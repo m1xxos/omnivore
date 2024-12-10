@@ -8,7 +8,7 @@ name: Docker build api
 on:
 
   push:
-    branches: [ "*" ]
+    branches: [ "main" ]
     paths:
       - "packages/api/**"
     # Publish semver tags as releases.
