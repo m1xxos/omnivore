@@ -51,3 +51,5 @@ Refer the [using locally](../db/README.md#using-locally) section from db README.
 ### Run the app
 
     yarn dev
+
+test
