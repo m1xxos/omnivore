@@ -16,9 +16,7 @@ RUN find packages -mindepth 1 -type d \
     ! -regex '^packages/\(api\|readabilityjs\|text-to-speech\|content-handler\|liqe\|utils\)\(/.*\)?' \
     -exec rm -rf {} +
 
-RUN yarn set version stable && \
-    yarn add typescript --dev && \
-    yarn install && \
+RUN yarn install --pure-lockfile && \
     yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/text-to-speech-handler build && \
     yarn workspace @omnivore/content-handler build && \
