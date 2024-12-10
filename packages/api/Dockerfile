@@ -5,7 +5,7 @@ WORKDIR /app
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Объединение RUN команд и очистка кеша apt-get
-RUN apk update && apk add g++ make python3 bash && apk clean && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add g++ make python3 bash && apk cache clean && rm -rf /var/lib/apt/lists/*
 
 # Копирование всех необходимых файлов и директорий за один раз
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
