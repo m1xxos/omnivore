@@ -48,6 +48,8 @@ Refer the [using locally](../db/README.md#using-locally) section from db README.
 
     cp .env.example .env
 
+test
+
 ### Run the app
 
     yarn dev
