@@ -16,8 +16,7 @@ RUN find packages -mindepth 1 -type d \
     ! -regex '^packages/\(api\|readabilityjs\|text-to-speech\|content-handler\|liqe\|utils\)\(/.*\)?' \
     -exec rm -rf {} +
 
-RUN D=registry.yarnpkg.com sh -c 'echo `dig +short $D | tail -1` $D' | sudo tee -a /etc/hosts && \
-    yarn install --pure-lockfile --verbose && \
+RUN yarn install --pure-lockfile --verbose && \
     yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/text-to-speech-handler build && \
     yarn workspace @omnivore/content-handler build && \
