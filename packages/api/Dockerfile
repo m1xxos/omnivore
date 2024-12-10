@@ -17,7 +17,7 @@ RUN find packages -mindepth 1 -type d \
     -exec rm -rf {} +
 
 RUN yarn set version stable && \
-    yarn install --pure-lockfile && \
+    yarn install && \
     yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/text-to-speech-handler build && \
     yarn workspace @omnivore/content-handler build && \
