@@ -1,11 +1,11 @@
-FROM node:lts-alpine3.20 AS builder
+FROM node:18.16 AS builder
 
 WORKDIR /app
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
 # Объединение RUN команд и очистка кеша apt-get
-RUN apk update && apk add g++ make python3 bash && apk cache clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y g++ make python3 && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Копирование всех необходимых файлов и директорий за один раз
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
@@ -16,7 +16,8 @@ RUN find packages -mindepth 1 -type d \
     ! -regex '^packages/\(api\|readabilityjs\|text-to-speech\|content-handler\|liqe\|utils\)\(/.*\)?' \
     -exec rm -rf {} +
 
-RUN yarn install --pure-lockfile && \
+RUN yarn global add node-gyp && \
+    yarn install --pure-lockfile && \
     yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/text-to-speech-handler build && \
     yarn workspace @omnivore/content-handler build && \
@@ -25,7 +26,7 @@ RUN yarn install --pure-lockfile && \
     rm -rf /app/packages/api/node_modules /app/node_modules && \
     yarn install --pure-lockfile --production
 
-FROM node:lts-alpine3.20 AS runner
+FROM node:18.16-alpine AS runner
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 RUN apk update && apk add netcat-openbsd && rm -rf /var/cache/apk/*
