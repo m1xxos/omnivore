@@ -53,3 +53,4 @@ Refer the [using locally](../db/README.md#using-locally) section from db README.
 
     yarn dev
 
+test
