@@ -42,10 +42,10 @@ RUN yarn workspace @omnivore/utils build && \
 EXPOSE 8080
 
 # In Firefox we can't use the adblocking sites. Adding them to the hosts file of the docker seems to work.
-RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
-    echo "#!/bin/bash \n\
+RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts 
+RUN echo "#!/bin/bash \n\
 cat hosts >> /etc/hosts \n\
 yarn workspace @omnivore/content-fetch start" >> ./start.sh && \
-    chmod +x ./start.sh
+chmod +x ./start.sh
 
 CMD ["./start.sh"]
