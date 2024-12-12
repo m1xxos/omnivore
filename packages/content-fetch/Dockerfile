@@ -2,7 +2,7 @@ FROM node:18.16-alpine
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package.
-RUN apk update && apk add \
+RUN apk update && apk add --no-cache \
     ca-certificates \
     chromium \
     firefox-esr \
@@ -28,7 +28,10 @@ COPY /packages/utils/package.json ./packages/utils/package.json
 
 RUN yarn install --pure-lockfile
 
-COPY /packages/content-fetch /packages/content-handler /packages/puppeteer-parse /packages/utils ./packages/
+COPY /packages/content-fetch ./packages/content-fetch
+COPY /packages/content-handler ./packages/content-handler
+COPY /packages/puppeteer-parse ./packages/puppeteer-parse
+COPY /packages/utils ./packages/utils
 
 RUN yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/puppeteer-parse build && \
