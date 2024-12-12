@@ -19,7 +19,7 @@ ENV CHROMIUM_PATH=/usr/bin/chromium
 ENV FIREFOX_PATH=/usr/bin/firefox
 ENV LAUNCH_HEADLESS=true
 
-COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc start.sh ./
+COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 COPY /packages/content-fetch/package.json ./packages/content-fetch/package.json
 COPY /packages/content-handler/package.json ./packages/content-handler/package.json
 COPY /packages/puppeteer-parse/package.json ./packages/puppeteer-parse/package.json
@@ -42,7 +42,11 @@ RUN yarn workspace @omnivore/utils build && \
 EXPOSE 8080
 
 # In Firefox we can't use the adblocking sites. Adding them to the hosts file of the docker seems to work.
-RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts &\
-    chmod +x ./start.sh
+RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+RUN echo "#!/bin/bash \n\
+cat hosts >> /etc/hosts \n\
+yarn workspace @omnivore/content-fetch start" >> ./start.sh
+
+RUN chmod +x ./start.sh
 
 CMD ["./start.sh"]
