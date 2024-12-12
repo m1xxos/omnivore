@@ -2,7 +2,7 @@ FROM node:18.16-alpine
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package.
-RUN apt-get update && apt-get install -y \
+RUN apk update && apk add \
     ca-certificates \
     chromium \
     firefox-esr \
@@ -11,12 +11,12 @@ RUN apt-get update && apt-get install -y \
     nodejs \
     python3 \
     yarn && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
-ENV CHROMIUM_PATH /usr/bin/chromium
-ENV FIREFOX_PATH /usr/bin/firefox
+ENV CHROMIUM_PATH=/usr/bin/chromium
+ENV FIREFOX_PATH=/usr/bin/firefox
 ENV LAUNCH_HEADLESS=true
 
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
@@ -28,15 +28,14 @@ COPY /packages/utils/package.json ./packages/utils/package.json
 
 RUN yarn install --pure-lockfile
 
-COPY /packages/content-fetch /packages/content-handler &&\
-    /packages/puppeteer-parse /packages/utils ./packages/
+COPY /packages/content-fetch /packages/content-handler /packages/puppeteer-parse /packages/utils ./packages/
 
 RUN yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/puppeteer-parse build && \
     yarn workspace @omnivore/content-handler build && \
     yarn workspace @omnivore/content-fetch build && \
-    rm -rf /app/packages/content-fetch/node_modules && \\
-    rm -rf /app/node_modules && \\
+    rm -rf /app/packages/content-fetch/node_modules && \
+    rm -rf /app/node_modules && \
     yarn install --pure-lockfile --production
 
 EXPOSE 8080
