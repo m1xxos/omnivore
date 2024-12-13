@@ -3,6 +3,8 @@ LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
 RUN apk update && apk add --no-cache \
+    libx11 libxcomposite libxext libxdamage libxrandr \
+    mesa-gl mesa-egl mesa-dri-gallium fontconfig xvfb libxshmfence \
     chromium \
     firefox-esr \
     firefox \
