@@ -1,17 +1,28 @@
-FROM node:18.16-buster
+FROM node:18.16-alpine
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
-RUN apt-get update && apt-get install -y --no-install-recommends\
+RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
+  && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
+  && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
+  && apk -U upgrade \
+  && apk add --no-cache \
+    firefox@edge \
+    firefox-esr@edge \
+    freetype@edge \
+    ttf-freefont@edge \
+    nss@edge \
+    libstdc++@edge \
+    sqlite-libs@edge \ 
     chromium \
-    firefox-esr \
     ca-certificates \
     nodejs \
     yarn \
     g++ \
     make \
     python3 && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    rm -rf /var/cache/apk/*
+
 
 WORKDIR /app
 
@@ -25,7 +36,7 @@ COPY /packages/content-handler/package.json ./packages/content-handler/package.j
 COPY /packages/puppeteer-parse/package.json ./packages/puppeteer-parse/package.json
 COPY /packages/utils/package.json ./packages/utils/package.json
 
-RUN yarn install --pure-lockfile --network-timeout 200000
+RUN yarn install --pure-lockfile
 
 COPY /packages/content-fetch ./packages/content-fetch
 COPY /packages/content-handler ./packages/content-handler
@@ -37,15 +48,13 @@ RUN yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/puppeteer-parse build && \
     yarn workspace @omnivore/content-fetch build && \
     rm -rf /app/packages/content-fetch/node_modules /app/node_modules && \
-    yarn install --pure-lockfile --production --network-timeout 200000
+    yarn install --pure-lockfile --production
 
 EXPOSE 8080
 
 # In Firefox we can't use the adblocking sites. Adding them to the hosts file of the docker seems to work.
+COPY /packages/content-fetch/start.sh .
 RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
-    echo "#!/bin/bash \n\
-    cat hosts >> /etc/hosts \n\
-    yarn workspace @omnivore/content-fetch start" >> ./start.sh &&\
     chmod +x start.sh
 
 CMD ["./start.sh"]
