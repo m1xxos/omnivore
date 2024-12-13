@@ -18,7 +18,9 @@ RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/
     ca-certificates@edge \
     g++@edge \
     make@edge \
-    python3@edge && \
+    python3 && \
+    node && \
+    yarn && \
     rm -rf /var/cache/apk/*
 
 WORKDIR /app
