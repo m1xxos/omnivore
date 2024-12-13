@@ -16,7 +16,7 @@ RUN apk update && apk add --no-cache \
 RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
-&& apk -U upgrade \
+&& apk -U update \
 && apk add --no-cache \
     firefox@edge \
     freetype@edge \
