@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
-&& apk -U update \
+&& apk -U upgrade \
 && apk add --no-cache \
     firefox@edge \
     freetype@edge \
