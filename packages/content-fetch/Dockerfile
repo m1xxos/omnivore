@@ -2,17 +2,6 @@ FROM node:18.16-alpine
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
-RUN apk update && apk add --no-cache \
-    chromium \
-    firefox-esr \
-    ca-certificates \
-    nodejs \
-    yarn \
-    g++ \
-    make \
-    python3 && \
-    rm -rf /var/cache/apk/*
-
 RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
@@ -23,7 +12,14 @@ RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/
     ttf-freefont@edge \
     nss@edge \
     libstdc++@edge \
-    sqlite-libs@edge
+    sqlite-libs@edge \
+    chromium@edge \
+    firefox-esr@edge \
+    ca-certificates@edge \
+    g++@edge \
+    make@edge \
+    python3@edge && \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
