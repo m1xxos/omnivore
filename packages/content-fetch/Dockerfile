@@ -5,6 +5,7 @@ LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 RUN apk update && apk add --no-cache \
     chromium \
     firefox-esr \
+    firefox \
     ca-certificates \
     nodejs \
     yarn \
@@ -42,7 +43,8 @@ RUN yarn workspace @omnivore/utils build && \
 EXPOSE 8080
 
 # In Firefox we can't use the adblocking sites. Adding them to the hosts file of the docker seems to work.
-RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
 COPY /packages/content-fetch/start.sh .
+RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
+    chmod +x start.sh
 
 CMD ["./start.sh"]
