@@ -1,4 +1,4 @@
-FROM node:18.16
+FROM node:18.16-buster
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
@@ -25,7 +25,7 @@ COPY /packages/content-handler/package.json ./packages/content-handler/package.j
 COPY /packages/puppeteer-parse/package.json ./packages/puppeteer-parse/package.json
 COPY /packages/utils/package.json ./packages/utils/package.json
 
-RUN yarn install --pure-lockfile
+RUN yarn install --pure-lockfile --network-timeout 200000
 
 COPY /packages/content-fetch ./packages/content-fetch
 COPY /packages/content-handler ./packages/content-handler
@@ -37,7 +37,7 @@ RUN yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/puppeteer-parse build && \
     yarn workspace @omnivore/content-fetch build && \
     rm -rf /app/packages/content-fetch/node_modules /app/node_modules && \
-    yarn install --pure-lockfile --production
+    yarn install --pure-lockfile --production --network-timeout 200000
 
 EXPOSE 8080
 
