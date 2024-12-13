@@ -1,4 +1,4 @@
-FROM node:18.16-buster
+FROM node:18.16
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
