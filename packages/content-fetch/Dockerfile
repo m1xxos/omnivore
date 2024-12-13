@@ -4,6 +4,7 @@ LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 # Installs latest Chromium package and other dependencies.
 RUN apk update && apk add --no-cache \
     chromium \
+    firefox-esr \
     ca-certificates \
     nodejs \
     yarn \
@@ -18,7 +19,6 @@ RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/
 && apk -U upgrade \
 && apk add --no-cache \
     firefox@edge \
-    firefox-esr@edge \
     freetype@edge \
     ttf-freefont@edge \
     nss@edge \
