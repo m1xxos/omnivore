@@ -1,23 +1,17 @@
-FROM node:18.16-alpine
+FROM node:18.16-buster
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
-RUN apk update && apk add --no-cache \
-    freetype \
-    ttf-freefont \
-    nss \
-    libstdc++ \
-    sqlite-libs \
+RUN apt-get update && apt-get install -y --no-install-recommends\
     chromium \
     firefox-esr \
-    firefox \
     ca-certificates \
     nodejs \
     yarn \
     g++ \
     make \
     python3 && \
-    rm -rf /var/cache/apk/*
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -48,8 +42,10 @@ RUN yarn workspace @omnivore/utils build && \
 EXPOSE 8080
 
 # In Firefox we can't use the adblocking sites. Adding them to the hosts file of the docker seems to work.
-COPY /packages/content-fetch/start.sh .
 RUN wget https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts && \
+    echo "#!/bin/bash \n\
+    cat hosts >> /etc/hosts \n\
+    yarn workspace @omnivore/content-fetch start" >> ./start.sh &&\
     chmod +x start.sh
 
 CMD ["./start.sh"]
