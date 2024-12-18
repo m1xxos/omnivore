@@ -7,7 +7,7 @@ name: Docker build content-fetch
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "self-host-updates" ]
     paths:
       - "packages/content-fetch/**"
       - '.github/workflows/docker-content-fetcher.yml'

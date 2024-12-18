@@ -7,7 +7,7 @@ name: Docker build api
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "self-host-updates" ]
     paths:
       - "packages/api/**"
       - '.github/workflows/docker-api.yml'
