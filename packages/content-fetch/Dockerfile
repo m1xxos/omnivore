@@ -7,15 +7,6 @@ RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/
 && echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
 && apk -U upgrade \
 && apk add --no-cache \
-    firefox@edge \
-    freetype@edge \
-    ttf-freefont@edge \
-    nss@edge \
-    libstdc++@edge \
-    sqlite-libs@edge \
-    chromium@edge \
-    firefox-esr@edge \
-    ca-certificates@edge \
     g++@edge \
     make@edge \
     python3 && \
