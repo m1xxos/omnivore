@@ -1,4 +1,4 @@
-FROM node:18.16-alpine
+FROM node:18.16-alpine AS build
 LABEL org.opencontainers.image.source="https://github.com/omnivore-app/omnivore"
 
 # Installs latest Chromium package and other dependencies.
@@ -48,6 +48,33 @@ RUN yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/content-fetch build && \
     rm -rf /app/packages/content-fetch/node_modules /app/node_modules && \
     yarn install --pure-lockfile --production
+
+# Running stage
+FROM node:18.16-alpine
+
+RUN echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories \
+&& echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories \
+&& echo @edge https://dl-cdn.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories  \
+&& apk -U upgrade \
+&& apk add --no-cache \
+    firefox@edge \
+    freetype@edge \
+    ttf-freefont@edge \
+    nss@edge \
+    libstdc++@edge \
+    sqlite-libs@edge \
+    chromium@edge \
+    firefox-esr@edge \
+    ca-certificates@edge \
+    rm -rf /var/cache/apk/*
+
+WORKDIR /app
+
+ENV CHROMIUM_PATH=/usr/bin/chromium
+ENV FIREFOX_PATH=/usr/bin/firefox
+ENV LAUNCH_HEADLESS=true
+
+COPY --from=build /app /app
 
 EXPOSE 8080
 
