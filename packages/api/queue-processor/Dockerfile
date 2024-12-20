@@ -4,17 +4,22 @@ WORKDIR /app
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-RUN apk update && apk add g++ make python3 && rm -rf /var/cache/apk/*
+RUN apk update && apk add g++ make python3 py3-setuptools && rm -rf /var/cache/apk/*
 
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 COPY packages ./packages
 
 # Remove all except needed packages
-RUN find packages -mindepth 1 -type d \
-    ! -regex '^packages/\(api\|readabilityjs\|text-to-speech\|content-handler\|liqe\|utils\)\(/.*\)?' \
-    -exec rm -rf {} +
-
-RUN yarn install --pure-lockfile && \
+RUN cd packages && \
+    find . -mindepth 1 -maxdepth 1 -type d \
+    ! -name "api" \
+    ! -name "readabilityjs" \
+    ! -name "text-to-speech" \
+    ! -name "content-handler" \
+    ! -name "liqe" \
+    ! -name "utils" \
+    -exec rm -rf {} + && \
+    yarn install --pure-lockfile && \
     yarn workspace @omnivore/utils build && \
     yarn workspace @omnivore/text-to-speech-handler build && \
     yarn workspace @omnivore/content-handler build && \
