@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "testing", "self-host-updates" ]
     paths:
-      - "packages/queue-manager/**"
+      - "packages/api/queue-processor/**"
   pull_request:
     branches: [ "self-host-updates" ]
 
@@ -13,4 +13,4 @@ jobs:
     uses: ./.github/workflows/docker-build-push.yaml
     with:
       image-name: queue-processor
-      dockerfile-path: ./packages/queue-manager/Dockerfile
+      dockerfile-path: ./packages/api/queue-processor/Dockerfile
