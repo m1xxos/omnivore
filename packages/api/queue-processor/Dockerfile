@@ -4,7 +4,7 @@ WORKDIR /app
 
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 
-RUN apt-get update && apt-get install -y g++ make python3 && apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apk update && apk add g++ make python3 && rm -rf /var/cache/apk/*
 
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 COPY packages ./packages
