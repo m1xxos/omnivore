@@ -5,7 +5,7 @@ on:
     branches: [ "testing", "self-host-updates" ]
     paths:
       - "packages/content-fetch/**"
-      - '.github/workflows/docker-content-fetcher.yml'
+      - '.github/workflows/docker-content-fetcher.yaml'
   pull_request:
     branches: [ "self-host-updates" ]
 
@@ -14,3 +14,4 @@ jobs:
     uses: ./.github/workflows/docker-build-push.yaml
     with:
       image-name: content-fetch
+      dockerfile-path: ./packages/content-fetch/Dockerfile

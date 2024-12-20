@@ -18,6 +18,9 @@ on:
           required: false
           type: string
           default: "self-host-updates"
+        dockerfile-path:
+          required: true
+          type: string
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -77,7 +80,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./packages/content-fetch/Dockerfile
+          file: ${{inputs.dockerfile-path}}
           platforms: ${{inputs.platforms}}
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
