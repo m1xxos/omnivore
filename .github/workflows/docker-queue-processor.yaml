@@ -1,0 +1,16 @@
+name: Docker build queue-processor
+
+on:
+  push:
+    branches: [ "testing", "self-host-updates" ]
+    paths:
+      - "packages/queue-manager/**"
+  pull_request:
+    branches: [ "self-host-updates" ]
+
+jobs:
+  build-image:
+    uses: ./.github/workflows/docker-build-push.yaml
+    with:
+      image-name: queue-processor
+      dockerfile-path: ./packages/queue-manager/Dockerfile
