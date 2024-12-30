@@ -12,15 +12,15 @@ ENV NEXT_PUBLIC_BASE_URL=$BASE_URL
 ENV NEXT_PUBLIC_SERVER_BASE_URL=$SERVER_BASE_URL
 ENV NEXT_PUBLIC_HIGHLIGHTS_BASE_URL=$HIGHLIGHTS_BASE_URL
 
-RUN apk add g++ make python3 py3-setuptools
-
+RUN apk add --no-cache g++ make python3 py3-setuptools py3-pip
 WORKDIR /app
 
 COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 
 COPY /packages/web/package.json ./packages/web/package.json
 
-RUN yarn install --pure-lockfile
+RUN npm config set network-timeout 600000 && \
+    yarn install --pure-lockfile
 ADD /packages/web ./packages/web
 
 COPY ./packages/web/next.config.self.js ./packages/web/next.config.js
