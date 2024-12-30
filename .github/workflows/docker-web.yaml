@@ -1,4 +1,4 @@
-name: Docker build content-fetch
+name: Docker build web
 
 on:
   push:
