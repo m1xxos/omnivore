@@ -21,6 +21,10 @@ on:
         dockerfile-path:
           required: true
           type: string
+        build-args:
+          required: false
+          type: string
+          default: ""
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -88,3 +92,4 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           network: host
+          build-args: ${{inputs.build-args}}

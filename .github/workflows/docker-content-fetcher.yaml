@@ -13,5 +13,5 @@ jobs:
   build-image:
     uses: ./.github/workflows/docker-build-push.yaml
     with:
-      image-name: content-fetch
+      image-name: omnivore-content-fetch
       dockerfile-path: ./packages/content-fetch/Dockerfile

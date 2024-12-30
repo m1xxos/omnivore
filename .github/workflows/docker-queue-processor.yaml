@@ -12,5 +12,5 @@ jobs:
   build-image:
     uses: ./.github/workflows/docker-build-push.yaml
     with:
-      image-name: queue-processor
+      image-name: omnivore-queue-processor
       dockerfile-path: ./packages/api/queue-processor/Dockerfile
