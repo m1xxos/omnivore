@@ -19,7 +19,7 @@ COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 
 COPY /packages/web/package.json ./packages/web/package.json
 
-RUN yarn install --pure-lockfile --network-timeout
+RUN yarn install --pure-lockfile --network-timeout 1000000
 ADD /packages/web ./packages/web
 
 COPY ./packages/web/next.config.self.js ./packages/web/next.config.js
