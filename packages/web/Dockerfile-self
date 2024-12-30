@@ -16,11 +16,7 @@ RUN apk add g++ make python3 py3-setuptools
 
 WORKDIR /app
 
-COPY package.json .
-COPY yarn.lock .
-COPY tsconfig.json .
-COPY .prettierrc .
-COPY .eslintrc .
+COPY package.json yarn.lock tsconfig.json .prettierrc .eslintrc ./
 
 COPY /packages/web/package.json ./packages/web/package.json
 

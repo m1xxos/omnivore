@@ -13,7 +13,7 @@ jobs:
     uses: ./.github/workflows/docker-build-push.yaml
     with:
       image-name: omnivore-web
-      dockerfile-path: ./packages/web/Dockerfile
+      dockerfile-path: ./packages/web/Dockerfile-self
       build-args: |
         - APP_ENV=prod
         - BASE_URL=https://omnivore.m1xxos.me
