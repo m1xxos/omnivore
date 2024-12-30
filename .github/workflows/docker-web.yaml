@@ -15,8 +15,8 @@ jobs:
       image-name: omnivore-web
       dockerfile-path: ./packages/web/Dockerfile-self
       build-args: |
-        - APP_ENV=prod
-        - BASE_URL=https://omnivore.m1xxos.me
-        - SERVER_BASE_URL=https://omnivore.m1xxos.me
-        - HIGHLIGHTS_BASE_URL=https://omnivore.m1xxos.me
-        - USE_NATIVE_PDF=true
+        APP_ENV=prod
+        BASE_URL=https://omnivore.m1xxos.me
+        SERVER_BASE_URL=https://omnivore.m1xxos.me
+        HIGHLIGHTS_BASE_URL=https://omnivore.m1xxos.me
+        USE_NATIVE_PDF=true
