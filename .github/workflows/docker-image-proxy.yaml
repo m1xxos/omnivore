@@ -14,4 +14,4 @@ jobs:
     with:
       image-name: omnivore-image-proxy
       context: ./imageproxy
-      dockerfile-path: ./Dockerfile
+      dockerfile-path: ./imageproxy/Dockerfile

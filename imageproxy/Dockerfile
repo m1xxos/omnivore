@@ -1,4 +1,4 @@
-FROM ghcr.io/willnorris/imageproxy:main as build
+FROM ghcr.io/willnorris/imageproxy:main AS build
 
 # Above imageproxy image is built from scratch image and is barebones
 # Switching over to ubuntu base image to allow us to debug better.
