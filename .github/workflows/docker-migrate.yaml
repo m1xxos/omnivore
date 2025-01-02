@@ -1,0 +1,16 @@
+name: Docker build migrate
+
+on:
+  push:
+    branches: [ "testing", "self-host-updates" ]
+    paths:
+      - "packages/db/**"
+  pull_request:
+    branches: [ "self-host-updates" ]
+
+jobs:
+  build-image:
+    uses: ./.github/workflows/docker-build-push.yaml
+    with:
+      image-name: omnivore-migrate
+      dockerfile-path: ./packages/db/Dockerfile
