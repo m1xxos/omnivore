@@ -1,0 +1,16 @@
+name: Docker build api
+
+on:
+  push:
+    branches: [ "testing", "self-host-updates" ]
+    paths:
+      - "packages/api/**"
+  pull_request:
+    branches: [ "self-host-updates" ]
+
+jobs:
+  build-image:
+    uses: ./.github/workflows/docker-build-push.yaml
+    with:
+      image-name: omnivore-api
+      dockerfile-path: ./packages/api/Dockerfile
