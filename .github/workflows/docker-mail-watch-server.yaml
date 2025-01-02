@@ -1,0 +1,16 @@
+name: Docker build mail watch server
+
+on:
+  push:
+    branches: [ "testing", "self-host-updates" ]
+    paths:
+      - "packages/local-mail-watcher/**"
+  pull_request:
+    branches: [ "self-host-updates" ]
+
+jobs:
+  build-image:
+    uses: ./.github/workflows/docker-build-push.yaml
+    with:
+      image-name: omnivore-mail-watch-server
+      dockerfile-path: ./packages/local-mail-watcher/Dockerfile
