@@ -2,11 +2,11 @@ FROM ghcr.io/willnorris/imageproxy:main as build
 
 # Above imageproxy image is built from scratch image and is barebones
 # Switching over to ubuntu base image to allow us to debug better.
-FROM ubuntu:bionic
+FROM alpine:3.21
 
 WORKDIR /app
 
-RUN apt update && apt install -y ca-certificates
+RUN apk update && apk add --no-cache ca-certificates
 
 COPY --from=build /app/imageproxy .
 

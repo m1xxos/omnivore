@@ -25,6 +25,10 @@ on:
           required: false
           type: string
           default: ""
+        context:
+          required: false
+          type: string
+          default: "."
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -83,7 +87,7 @@ jobs:
         id: build-and-push
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ${{inputs.context}}
           file: ${{inputs.dockerfile-path}}
           platforms: ${{inputs.platforms}}
           push: ${{ github.event_name != 'pull_request' }}
