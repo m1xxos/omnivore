@@ -6,7 +6,7 @@ FROM alpine:3.21
 
 WORKDIR /app
 
-RUN apk update && apk add --no-cache ca-certificates
+RUN apk update && apk add --no-cache ca-certificates bash
 
 COPY --from=build /app/imageproxy .
 
